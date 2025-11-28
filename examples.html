@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <!--#1--><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--FIX #1added veiwport meta tag--><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard — (buggy)</title>
   <!-- NOTE: Intentionally MISSING meta viewport to create a mobile bug for Set 1 -->
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <style>
     /* ================
        BUGGY DARK THEME CSS (intentionally contains mistakes)
@@ -15,7 +15,7 @@
 
     /* 1) Missing global box-sizing (BUG) */
 
-    /*#2*/
+    /*FIX #2 added global box-sizing property*/
     *{box-sizing: border-box;}
 
     :root {
@@ -48,7 +48,7 @@
     }
 
     /* BUG: CSS targets .nav-itm but HTML uses .nav-item */
-    /*#3*/.nav-item {
+    /*FIX #3 corrected nav item typo*/.nav-item {
       display: block;
       padding: 12px 10px;
       color: #94a3b8;
@@ -66,7 +66,7 @@
     }
 
     .brand {
-      /*#3*/
+      /*FIX #4* Removed !important selector/
       /* BUG: Using !important here to create a specificity trap */
       color: #ffffff;
       font-weight: 700;
@@ -95,7 +95,8 @@
     }
 
     /* BUG: CSS expects .card inside .stats as .stats .card, but HTML uses .stat-card */
-    .stats .card {
+    /* FIX #5 corrected and used the right selector */
+    .stats .stat-card {
       padding: 14px;
       background: var(--panel);
       border-radius: 10px;
@@ -118,8 +119,9 @@
     }
 
     /* BUG: Specificity trap - this rule uses a long chain and will override simple fixes */
-    .main .content-grid > .card {
-      border: 1px solid rgba(255,255,255,0.02);
+    /* #FIX7 added another class to target them specifically */
+    .contentGridCard {
+      border: 1px solid rgba(55, 0, 255, 0);
     }
 
     /* table */
@@ -158,9 +160,12 @@
       font-size: 13px;
     }
 
+    /* #FIX 6 created class to handle user avatar border */
     .user-avatar{
       width: 40px;
       height: 40px;
+      border-radius:50%; 
+      border:3px solid rgb(0, 255, 0);
     }
 
     /* responsive small-screen tweak (deliberately too late because meta viewport missing) */
@@ -191,7 +196,7 @@
       <div style="margin-top:20px">
         <div class="user">
           <!-- BUG: Inline style with !important and missing alt attribute -->
-          <img class="user-avatar" src="/assets/media/images/my_avatar.jpg" style="border-radius:50%; border:3px solid #00ff00 !important;" />
+          <img class="user-avatar" src="/assets/media/images/my_avatar.jpg" />
           <div>
             <div class="name">Favour Onyeisi</div>
             <div class="role" style="color:#9aa4b2;">Administrator</div>
@@ -206,7 +211,7 @@
         <div class="search">Search... (broken demo)</div>
         <div class="controls">
           <!-- BUG: small script below expects .user-img but the class is user-avatar -->
-          <button id="notifBtn" aria-label="Notifications">🔔</button>
+          <button style="background-color: transparent; border: none;" id="notifBtn" aria-label="Notifications"><i class="fa-solid fa-bell" style="font-size: 25px; color: rgb(255, 217, 0);"></i></button>
         </div>
       </div>
 
@@ -227,12 +232,12 @@
       </section>
 
       <section class="content-grid" aria-label="Main content grid">
-        <div class="card">
+        <div class="card contentGridCard">
           <h3>Live Chart</h3>
           <div style="height:120px; background: linear-gradient(90deg,#0f1724,#08121b); border-radius:6px; display:flex; align-items:center; justify-content:center;">(chart placeholder)</div>
         </div>
 
-        <div class="card">
+        <div class="card contentGridCard">
           <h3>Recent Activity</h3>
           <ul style="margin:0; padding:0 0 0 16px;">
             <li>Server restart — 2h ago</li>
@@ -240,7 +245,7 @@
           </ul>
         </div>
 
-        <div class="card">
+        <div class="card contentGridCard">
           <h3>Tickets</h3>
           <table aria-label="Tickets table">
             <thead>
@@ -261,15 +266,15 @@
   </div> 
   <!-- end of landing page -->
 
-  <div class="appPage2" style="display: none;">
+  <div class="appPage2" style="display: none; padding: 2%; height: 100vh; width: 100vh;">
     <div class="appPage2_body">
 
-      <header>
-        <div class="branding">
-          <div class="logo"><img src="/assets/media/images/Cropped_logo.png" alt="" srcset=""></div>
+      <header style="display: flex; border-bottom: 1px solid rgb(131, 126, 143); padding: 20px;">
+        <div class="branding" style="display: flex;"> 
+          <div class="logo"><img style="width: 70px; height: 50px;" src="/assets/media/images/Cropped logo.png" alt="" srcset=""></div>
           <span>CRYSTEX</span>
         </div>
-        <nav>
+        <nav style="">
           <a href="#about">About</a>
           <a href="#projects">Projects</a>
           <a href="#contacts">Contacts</a>
@@ -322,6 +327,25 @@
               and download my contact details.
             </p>
             <img src="/assets/media/images/My_business_card.png" alt="" srcset="">
+            <div style="display: grid;">
+              <div class="bizCardLogo"><img style="width: 70px; height: 50px;" src="/assets/media/images/Cropped logo.png" alt="" srcset=""></div>
+              <div>CRYSTEX</div>
+              <div>Favour</div>
+              <div>Software Engineer</div>
+              <div>
+                 <div>
+                  <i style="display: block;" class="fa-regular fa-envelope" style="color: rgb(255, 255, 255);"></i>
+                  <i style="display: block;" class="fa-solid fa-globe" style="color: rgb(255, 255, 255);"></i>
+                  <i style="display: block;" class="fa-solid fa-phone" style="color: rgb(255, 255, 255);"></i>
+                </div>
+                 <div>
+                  <span style="display: block;">onyeisifavour02@gmail.com</span>
+                  <span style="display: block;">www.crystex.com</span>
+                  <span style="display: block;">+2347081926298</span>
+                </div>
+              </div>
+            </div>
+            </div>
           </div>
         </div>
 
