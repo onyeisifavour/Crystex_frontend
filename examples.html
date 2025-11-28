@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Admin Dashboard — (buggy)</title>
+  <!-- NOTE: Intentionally MISSING meta viewport to create a mobile bug for Set 1 -->
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+
+  <style>
+    /* ================
+       BUGGY DARK THEME CSS (intentionally contains mistakes)
+       Fixes for these will be asked in Set 1
+       ================ */
+
+    /* 1) Missing global box-sizing (BUG) */
+
+    :root {
+      --bg: #0b1220;
+      --panel: #0f1724;
+      --muted: #9aa4b2;
+      --accent: #7c3aed; /* purple */
+      --danger: #ef4444;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #071021 0%, var(--bg) 100%);
+      color: #cbd5e1;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      /* missing box-sizing could cause spacing surprises */
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar: NOTE the selector deliberately misspelled below (.nav-itm) */
+    .sidebar {
+      background: rgba(4,6,12,0.6);
+      padding: 18px 12px;
+      border-right: 1px solid rgba(255,255,255,0.03);
+    }
+
+    /* BUG: CSS targets .nav-itm but HTML uses .nav-item */
+    .nav-itm {
+      display: block;
+      padding: 12px 10px;
+      color: #94a3b8;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    /* Top bar */
+    .topbar {
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      /* BUG: Using !important here to create a specificity trap */
+      color: #fff !important;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .search {
+      background: rgba(255,255,255,0.03);
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    /* Panels section */
+    .main {
+      background: transparent;
+      padding: 20px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    /* BUG: CSS expects .card inside .stats as .stats .card, but HTML uses .stat-card */
+    .stats .card {
+      padding: 14px;
+      background: var(--panel);
+      border-radius: 10px;
+      color: #e6eef8;
+      box-shadow: 0 4px 18px rgba(2,6,23,0.6);
+    }
+
+    /* Content grid items */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      background: #0e1624;
+      border-radius: 10px;
+      padding: 14px;
+      color: #dbeafe;
+    }
+
+    /* BUG: Specificity trap - this rule uses a long chain and will override simple fixes */
+    .main .content-grid > .card {
+      border: 1px solid rgba(255,255,255,0.02);
+    }
+
+    /* table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      color: #cbd5e1;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(255,255,255,0.02);
+    }
+
+    /* small user avatar styling (there is also an inline style to create a priority bug) */
+    .user {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .user .name {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* footer */
+    .footer {
+      padding: 20px;
+      color: #94a3b8;
+      font-size: 13px;
+    }
+
+    /* responsive small-screen tweak (deliberately too late because meta viewport missing) */
+    @media (max-width: 800px) {
+      .app { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .content-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" role="navigation" aria-label="Main navigation">
+      <div class="brand" tabindex="0">Crystex Admin</div>
+
+      <nav style="margin-top:18px">
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li><a class="nav-item" href="#dashboard">Dashboard</a></li>
+          <li><a class="nav-item" href="#reports">Reports</a></li>
+          <li><a class="nav-item" href="#settings">Settings</a></li>
+        </ul>
+      </nav>
+
+      <div style="margin-top:20px">
+        <div class="user">
+          <!-- BUG: Inline style with !important and missing alt attribute -->
+          <img class="user-avatar" src="https://via.placeholder.com/40" style="border-radius:50%; border:3px solid #00ff00 !important;" />
+          <div>
+            <div class="name">Favour Onyeisi</div>
+            <div class="role" style="color:#9aa4b2;">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main" role="main">
+      <div class="topbar" role="region" aria-label="Top bar">
+        <div class="search">Search... (broken demo)</div>
+        <div class="controls">
+          <!-- BUG: small script below expects .user-img but the class is user-avatar -->
+          <button id="notifBtn" aria-label="Notifications">🔔</button>
+        </div>
+      </div>
+
+      <section class="stats" aria-label="Statistics overview">
+        <!-- BUG: uses class names that CSS didn't target -->
+        <div class="stat-card">
+          <div class="k">Users</div>
+          <div class="v">3,420</div>
+        </div>
+        <div class="stat-card">
+          <div class="k">Revenue</div>
+          <div class="v">$12,430</div>
+        </div>
+        <div class="stat-card">
+          <div class="k">Errors</div>
+          <div class="v">18</div>
+        </div>
+      </section>
+
+      <section class="content-grid" aria-label="Main content grid">
+        <div class="card">
+          <h3>Live Chart</h3>
+          <div style="height:120px; background: linear-gradient(90deg,#0f1724,#08121b); border-radius:6px; display:flex; align-items:center; justify-content:center;">(chart placeholder)</div>
+        </div>
+
+        <div class="card">
+          <h3>Recent Activity</h3>
+          <ul style="margin:0; padding:0 0 0 16px;">
+            <li>Server restart — 2h ago</li>
+            <li>User signup — 4h ago</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Tickets</h3>
+          <table aria-label="Tickets table">
+            <thead>
+              <tr><th>Id</th><th>Title</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>#23</td><td>Login issue</td><td>Open</td></tr>
+              <tr><td>#22</td><td>Payment bug</td><td>Resolved</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section style="margin-top:18px" aria-label="Footer area">
+        <div class="footer">© 2025 Crystex — All rights reserved</div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Small JS with a deliberate selector typo — not required for Set 1, but will be used later
+    document.getElementById('notifBtn').addEventListener('click', function () {
+      console.log('open notifications');
+      // BUG: this selector purposely wrong for later tests
+      const avatar = document.querySelector('.user-img');
+      if (!avatar) {
+        console.warn('avatar not found (expected .user-img)'); // intentional
+      }
+    });
+  </script>
+</body>
+</html>
