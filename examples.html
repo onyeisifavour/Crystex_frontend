@@ -1,744 +1,498 @@
-
-<html lang="en">  
-
-<head>  
-
-  <meta charset="utf-8">  
-
-  <!--FIX #1added veiwport meta tag--><meta name="viewport" content="width=device-width, initial-scale=1.0">  
-
-  <title>Admin Dashboard — (buggy)</title>  
-
-  <!-- NOTE: Intentionally MISSING meta viewport to create a mobile bug for Set 1 -->  
-
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->  
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">  
-
-  <style>  
-
-    /* ================  
-
-       BUGGY DARK THEME CSS (intentionally contains mistakes)  
-
-       Fixes for these will be asked in Set 1  
-
-       ================ */  
-
-  
-
-    /* 1) Missing global box-sizing (BUG) */  
-
-  
-
-    /*FIX #2 added global box-sizing property*/  
-
-    *{box-sizing: border-box;}  
-
-  
-
-    :root {  
-
-      --bg: #0b1220;  
-
-      --panel: #0f1724;  
-
-      --muted: #9aa4b2;  
-
-      --accent: #7c3aed; /* purple */  
-
-      --danger: #ef4444;  
-
-    }  
-
-  
-
-    body {  
-
-      margin: 0;  
-
-      background: linear-gradient(180deg, #071021 0%, var(--bg) 100%);  
-
-      color: #cbd5e1;  
-
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;  
-
-      /* missing box-sizing could cause spacing surprises */  
-
-    }  
-
-  
-
-    .appPage1 {  
-
-      display: grid;  
-
-      grid-template-columns: 240px 1fr;  
-
-      min-height: 100vh;  
-
-    }  
-
-  
-
-    /* Sidebar: NOTE the selector deliberately misspelled below (.nav-itm) */  
-
-    .sidebar {  
-
-      background: rgba(4,6,12,0.6);  
-
-      padding: 18px 12px;  
-
-      border-right: 1px solid rgba(255,255,255,0.03);  
-
-    }  
-
-  
-
-    /* BUG: CSS targets .nav-itm but HTML uses .nav-item */  
-
-    /*FIX #3 corrected nav item typo*/.nav-item {  
-
-      display: block;  
-
-      padding: 12px 10px;  
-
-      color: #94a3b8;  
-
-      text-decoration: none;  
-
-      border-radius: 8px;  
-
-    }  
-
-  
-
-    /* Top bar */  
-
-    .topbar {  
-
-      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));  
-
-      padding: 12px 20px;  
-
-      display: flex;  
-
-      justify-content: space-between;  
-
-      align-items: center;  
-
-    }  
-
-  
-
-    .brand {  
-
-      /*FIX #4 Removed !important selector */  
-
-      /* BUG: Using !important here to create a specificity trap */  
-
-      color: #ffffff;  
-
-      font-weight: 700;  
-
-      letter-spacing: 0.4px;  
-
-    }  
-
-  
-
-    .search {  
-
-      background: rgba(255,255,255,0.03);  
-
-      padding: 8px 12px;  
-
-      border-radius: 8px;  
-
-      color: var(--muted);  
-
-      border: 1px solid rgba(255,255,255,0.03);  
-
-    }  
-
-  
-
-    /* Panels section */  
-
-    .main {  
-
-      background: transparent;  
-
-      padding: 20px;  
-
-    }  
-
-  
-
-    .stats {  
-
-      display: grid;  
-
-      grid-template-columns: repeat(3, 1fr);  
-
-      gap: 12px;  
-
-      margin-bottom: 18px;  
-
-    }  
-
-  
-
-    /* BUG: CSS expects .card inside .stats as .stats .card, but HTML uses .stat-card */  
-
-    /* FIX #5 corrected and used the right selector */  
-
-    .stats .stat-card {  
-
-      padding: 14px;  
-
-      background: var(--panel);  
-
-      border-radius: 10px;  
-
-      color: #e6eef8;  
-
-      box-shadow: 0 4px 18px rgba(2,6,23,0.6);  
-
-    }  
-
-  
-
-    /* Content grid items */  
-
-    .content-grid {  
-
-      display: grid;  
-
-      grid-template-columns: repeat(3, 1fr);  
-
-      gap: 14px;  
-
-    }  
-
-  
-
-    .card {  
-
-      background: #0e1624;  
-
-      border-radius: 10px;  
-
-      padding: 14px;  
-
-      color: #dbeafe;  
-
-    }  
-
-  
-
-    /* BUG: Specificity trap - this rule uses a long chain and will override simple fixes */  
-
-    /* #FIX7 added another class to target them specifically */  
-
-    .contentGridCard {  
-
-      border: 1px solid rgba(55, 0, 255, 0);  
-
-    }  
-
-  
-
-    /* table */  
-
-    table {  
-
-      width: 100%;  
-
-      border-collapse: collapse;  
-
-      margin-top: 12px;  
-
-      color: #cbd5e1;  
-
-    }  
-
-  
-
-    th, td {  
-
-      text-align: left;  
-
-      padding: 10px 12px;  
-
-    }  
-
-  
-
-    tr:nth-child(even) {  
-
-      background: rgba(255,255,255,0.02);  
-
-    }  
-
-  
-
-    /* small user avatar styling (there is also an inline style to create a priority bug) */  
-
-    .user {  
-
-      display: flex;  
-
-      gap: 12px;  
-
-      align-items: center;  
-
-    }  
-
-  
-
-    .user .name {  
-
-      color: var(--muted);  
-
-      font-size: 14px;  
-
-    }  
-
-  
-
-    /* footer */  
-
-    .footer {  
-
-      padding: 20px;  
-
-      color: #94a3b8;  
-
-      font-size: 13px;  
-
-    }  
-
-  
-
-    /* #FIX 6 created class to handle user avatar border */  
-
-    .user-avatar{  
-
-      width: 40px;  
-
-      height: 40px;  
-
-      border-radius:50%;   
-
-      border:3px solid rgb(0, 255, 0); 
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!--FIX #1added viewport meta tag-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — (buggy)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    /* ================
+       BUGGY DARK THEME CSS (intentionally contains mistakes)
+       Fixes for these will be asked in Set 1
+       ================ */
+
+    /* FIX #2 added global box-sizing property */
+    *{ box-sizing: border-box; }
+
+    :root {
+      --bg: #0b1220;
+      --panel: #0f1724;
+      --muted: #9aa4b2;
+      --accent: #7c3aed; /* purple */
+      --danger: #ef4444;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #071021 0%, var(--bg) 100%);
+      color: #cbd5e1;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      /* missing box-sizing could cause spacing surprises */
+    }
+
+    /* ---------------------------------------
+       A2 FIX #2: responsive grid column sizing
+       Replace the line below (grid-template-columns: 240px 1fr;)
+       with the snippet shown in the comment when you apply FIX #2.
+       --------------------------------------- */
+    .appPage1 {
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr);  /* <-- A2 FIX #2: changed 240px 1fr to: 240px minmax(0, 1fr) */
+      min-height: 100vh;
+    }
+    /* A2 FIX #2 - exact replacement (paste into your CSS to apply):
+    .appPage1 {
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr); allow second column to shrink 
+      min-height: 100vh;
+    }*/
+
+    /* Sidebar: NOTE the selector deliberately misspelled below (.nav-itm) */
+    .sidebar {
+      background: rgba(4,6,12,0.6);
+      padding: 18px 12px;
+      border-right: 1px solid rgba(255,255,255,0.03);
+    }
+
+    /* BUG: CSS targets .nav-itm but HTML uses .nav-item */
+    /*A1 FIX #3 corrected nav item typo*/
+    .nav-item {
+      display: block;
+      padding: 12px 10px;
+      color: #94a3b8;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    /* Top bar */
+    .topbar {
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       
+      /*A2 FIX #1 Applied style changes e.g sticky position*/
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(90deg, rgba(11,18,32,0.85), rgba(11,18,32,0.85)); /* ensure visible when over content */
+    }
+    /* ---------------------------------------
+       A2 FIX #1 — make topbar sticky
+       Add/replace the rule above with the snippet below (paste to apply)
+       --------------------------------------- */
+    /* A2 FIX #1 - exact snippet (paste into CSS)
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 60;            / * keep it above content * /
+      backdrop-filter: blur(6px);
+      background: linear-gradient(90deg, rgba(11,18,32,0.85), rgba(11,18,32,0.85));
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    */
+
+    .brand {
+      /* A1 FIX #4 Removed !important selector */
+      /* BUG: Using !important here to create a specificity trap */
+      color: #ffffff;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .search {
+      background: rgba(255,255,255,0.03);
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    /* Panels section */
+    /* ---------------------------------------
+       A2 FIX #4 — prevent margin collapse on .main
+       Add the padding-top:1px line shown in the comment to apply FIX #4
+       --------------------------------------- */
+    .main {
+      background: transparent;
+      padding: 20px;
+      padding-top: 1px;
+      /* A2 FIX #4: add small padding to stop margin collapsing:
+         padding-top: 1px;  / * A2 FIX #4 * /
+      */
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    /* BUG: CSS expects .card inside .stats as .stats .card, but HTML uses .stat-card */
+    /* A1 FIX #5 corrected and used the right selector */
+    .stats .stat-card {
+      padding: 14px;
+      background: var(--panel);
+      border-radius: 10px;
+      color: #e6eef8;
+      box-shadow: 0 4px 18px rgba(2,6,23,0.6);
+    }
+
+    /* Content grid items */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      background: #0e1624;
+      border-radius: 10px;
+      padding: 14px;
+      color: #dbeafe;
+    }
+
+    /* ---------------------------------------
+       A2 FIX #3 — allow grid children to shrink inside columns
+       Add the snippet below (uncomment/paste) to enable A2 FIX #3
+       --------------------------------------- */
+    /* A2 FIX #3 - exact snippet (pasted into CSS)*/
+    .content-grid > .card,
+    .stats > .stat-card {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    /* BUG: Specificity trap - this rule uses a long chain and will override simple fixes */
+    /*A1 #FIX7 added another class to target them specifically */
+    .contentGridCard {
+      border: 1px solid rgba(55, 0, 255, 0);
+    }
+
+    /* table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      color: #cbd5e1;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(255,255,255,0.02);
+    }
+
+    /* small user avatar styling (there is also an inline style to create a priority bug) */
+    .user {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top:20px /*another A2 #6 fix(removing inline styles*/
+    }
+
+    .user .name {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* footer */
+    .footer {
+      padding: 20px;
+      color: #94a3b8;
+      font-size: 13px;
+    }
+
+    /* A1 #FIX 6 created class to handle user avatar border */
+    .user-avatar{
+      width: 40px;
+      height: 40px;
+      border-radius:50%;
       border: 2px solid rgba(124, 58, 237, 0.9); /* purple accent */
-      
       box-shadow: 0 0 0 3px rgba(124,58,237,0.06);
-      
-    }  
-
-  
-
-    /* responsive small-screen tweak (deliberately too late because meta viewport missing) */  
-
-    @media (max-width: 800px) {  
-
-      .appPage1 { grid-template-columns: 1fr; }  
-
-      .stats { grid-template-columns: repeat(2, 1fr); }  
-
-      .content-grid { grid-template-columns: 1fr; }  
-
-    }  
-
-  </style>  
-
-</head>  
-
-<body>  
-
-  
-
-  <!-- landing page -->  
-
-  <div class="appPage1">  
-
-    <!-- SIDEBAR -->  
-
-    <aside class="sidebar" role="navigation" aria-label="Main navigation">  
-
-      <div class="brand" tabindex="0">Crystex Admin</div>  
-
-  
-
-      <nav style="margin-top:18px">  
-
-        <ul style="list-style:none; padding:0; margin:0;">  
-
-          <li><a class="nav-item" href="#dashboard">Dashboard</a></li>  
-
-          <li><a class="nav-item" href="#reports">Reports</a></li>  
-
-          <li><a class="nav-item" href="#settings">Settings</a></li>  
-
-          <li><a class="nav-item" href="#creatorPortfolio">Creator Portfolio</a></li>  
-
-        </ul>  
-
-      </nav>  
-
-  
-
-      <div style="margin-top:20px">  
-
-        <div class="user">  
-
-          <!-- BUG: Inline style with !important and missing alt attribute -->  
-
-          <img class="user-avatar" src="/assets/media/images/my_avatar.jpg" alt="Favour Onyeisi Avatar"/>  
-
-          <div>  
-
-            <div class="name">Favour Onyeisi</div>  
-
-            <div class="role" style="color:#9aa4b2;">Administrator</div>  
-
-          </div>  
-
-        </div>  
-
-      </div>  
-
-    </aside>  
-
-  
-
-    <!-- MAIN -->  
-
-    <main class="main" role="main">  
-
-      <div class="topbar" role="region" aria-label="Top bar">  
-
-        <div class="search">Search... (broken demo)</div>  
-
-        <div class="controls">  
-
-          <!-- BUG: small script below expects .user-img but the class is user-avatar -->  
-
-          <button style="background-color: transparent; border: none;" id="notifBtn" aria-label="Notifications"><i class="fa-solid fa-bell" style="font-size: 25px; color: rgb(255, 217, 0);"></i></button>  
-
-        </div>  
-
-      </div>  
-
-  
-
-      <section class="stats" aria-label="Statistics overview">  
-
-        <!-- BUG: uses class names that CSS didn't target -->  
-
-        <div class="stat-card">  
-
-          <div class="k">Users</div>  
-
-          <div class="v">3,420</div>  
-
-        </div>  
-
-        <div class="stat-card">  
-
-          <div class="k">Revenue</div>  
-
-          <div class="v">$12,430</div>  
-
-        </div>  
-
-        <div class="stat-card">  
-
-          <div class="k">Errors</div>  
-
-          <div class="v">18</div>  
-
-        </div>  
-
-      </section>  
-
-  
-
-      <section class="content-grid" aria-label="Main content grid">  
-
-        <div class="card contentGridCard">  
-
-          <h3>Live Chart</h3>  
-
-          <div style="height:120px; background: linear-gradient(90deg,#0f1724,#08121b); border-radius:6px; display:flex; align-items:center; justify-content:center;">(chart placeholder)</div>  
-
-        </div>  
-
-  
-
-        <div class="card contentGridCard">  
-
-          <h3>Recent Activity</h3>  
-
-          <ul style="margin:0; padding:0 0 0 16px;">  
-
-            <li>Server restart — 2h ago</li>  
-
-            <li>User signup — 4h ago</li>  
-
-          </ul>  
-
-        </div>  
-
-  
-
-        <div class="card contentGridCard">  
-
-          <h3>Tickets</h3>  
-
-          <table aria-label="Tickets table">  
-
-            <thead>  
-
-              <tr><th>Id</th><th>Title</th><th>Status</th></tr>  
-
-            </thead>  
-
-            <tbody>  
-
-              <tr><td>#23</td><td>Login issue</td><td>Open</td></tr>  
-
-              <tr><td>#22</td><td>Payment bug</td><td>Resolved</td></tr>  
-
-            </tbody>  
-
-          </table>  
-
-        </div>  
-
-      </section>  
-
-  
-
-      <section style="margin-top:18px" aria-label="Footer area">  
-
-        <div class="footer">© 2025 Crystex — All rights reserved</div>  
-
-      </section>  
-
-    </main>  
-
-  </div>   
-
-  <!-- end of landing page -->  
-
-  
-
-  <div class="appPage2" style="display: none; padding: 2%; height: 100vh; width: 100vh;">  
-
-    <div class="appPage2_body">  
-
-  
-
-      <header style="display: flex; border-bottom: 1px solid rgb(131, 126, 143); padding: 20px;">  
-
-        <div class="branding" style="display: flex;">   
-
-          <div class="logo"><img style="width: 70px; height: 50px;" src="/assets/media/images/Cropped logo.png" alt="" srcset=""></div>  
-
-          <span>CRYSTEX</span>  
-
-        </div>  
-
-        <nav style="">  
-
-          <a href="#about">About</a>  
-
-          <a href="#projects">Projects</a>  
-
-          <a href="#contacts">Contacts</a>  
-
-        </nav>  
-
-      </header>  
-
-  
-
-      <main>  
-
-  
-
-        <div class="profile">  
-
-          <h1>Hello, I'm Favour</h1>  
-
-          <p>  
-
-            Software Engineer and Founder of CRYSTEX.  
-
-            I build clean, high-performance web applications  
-
-            that focus on user experience.  
-
-          </p>  
-
-          <button type="button">Veiw My Work</button>  
-
-        </div>  
-
-  
-
-        <div class="about">  
-
-          <h3>About Me</h3>  
-
-          <p>  
-
-            My journey in software engineering is driven   
-
-            by a passion for elegant problem-solving and   
-
-            clean architecture. I specialize in the full-stack   
-
-            ecosystem, with deep expertise in modern JavaScript   
-
-            frameworks (React/Angular) and robust backend services   
-
-            (Node.js/Python). My goal is always to deliver scalable   
-
-            solutions that are maintainable and delightful to use.  
-
-          </p>  
-
-          <p>  
-
-            The CRYSTEX logo represents my core philosophy: clarity,   
-
-            precision, and foundational structure. I strive to bring   
-
-            this crystalline focus to every project, ensuring robust   
-
-            performance and beautiful design. Let's build something   
-
-            exceptional together.  
-
-          </p>            
-
-        </div>  
-
-  
-
-        <div class="projects">  
-
-          <h3>Featured Projects</h3>  
-
-          <div class="projectCards">  
-
-            <!-- autogenerated using js-->  
-
-          </div>  
-
-        </div>  
-
-  
-
-        <div class="contacts">  
-
-          <h3>Let's Connect</h3>  
-
-          <div>  
-
-            <p>Hover over the card below to flip it   
-
-              and download my contact details.  
-
-            </p>  
-
-            <img src="/assets/media/images/My_business_card.png" alt="" srcset="">  
-
-            <div style="display: grid;">  
-
-              <div class="bizCardLogo"><img style="width: 70px; height: 50px;" src="/assets/media/images/Cropped logo.png" alt="" srcset=""></div>  
-
-              <div>CRYSTEX</div>  
-
-              <div>Favour</div>  
-
-              <div>Software Engineer</div>  
-
-              <div>  
-
-                 <div>  
-
-                  <i style="display: block;" class="fa-regular fa-envelope" style="color: rgb(255, 255, 255);"></i>  
-
-                  <i style="display: block;" class="fa-solid fa-globe" style="color: rgb(255, 255, 255);"></i>  
-
-                  <i style="display: block;" class="fa-solid fa-phone" style="color: rgb(255, 255, 255);"></i>  
-
-                </div>  
-
-                 <div>  
-
-                  <span style="display: block;">onyeisifavour02@gmail.com</span>  
-
-                  <span style="display: block;">www.crystex.com</span>  
-
-                  <span style="display: block;">+2347081926298</span>  
-
-                </div>  
-
-              </div>  
-
-            </div>  
-
-            </div>  
-
-          </div>  
-
-        </div>  
-
-  
-
-      </main>  
-
-      <footer>  
-
-        <div>© 2025 Favour. All rights reserved. | Built with Clarity and Precision.</div>  
-
-      </footer>  
-
-    </div>  
-
-  </div>  
-
-  
-
-  <script>  
-
-    // Small JS with a deliberate selector typo — not required for Set 1, but will be used later  
-
-    document.getElementById('notifBtn').addEventListener('click', function () {  
-
-      console.log('open notifications');  
-
-      // BUG: this selector purposely wrong for later tests  
-
-      const avatar = document.querySelector('.user-img');  
-
-      if (!avatar) {  
-
-        console.warn('avatar not found (expected .user-img)'); // intentional  
-
-      }  
-
-    });  
-
-  </script>  
-
-</body>  
-
+    }
+
+    .userRole{color: #9aa4b2;} /*another A2 #6 fix(removing inline styles*/
+
+    /* ---------------------------------------
+       A2 FIX #5 — notification button styling
+       Add the #notifBtn rule below into the CSS and remove inline style on the button in HTML.
+
+                DONE
+       --------------------------------------- */
+    #notifBtn{
+     font-size: 25px; color: rgb(255, 217, 0);
+     background: transparent;
+     border: none;
+     padding: 6px;
+     cursor: pointer;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+    }
+
+    #notifBtn:focus {
+      outline: 2px solid rgba(124,58,237,0.5);
+      outline-offset: 2px;
+    }
+
+    /* A2 FIX #5 - exact snippet (paste into CSS)
+    #notifBtn {
+      background: transparent;
+      border: none;
+      padding: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #notifBtn:focus {
+      outline: 2px solid rgba(124,58,237,0.5);
+      outline-offset: 2px;
+    }
+    */
+
+    /* ---------------------------------------
+       A2 FIX #6 — move inline nav margin to CSS
+       Remove inline style="margin-top:18px" from the <nav> HTML and use this rule:
+       --------------------------------------- */
+    /* A2 FIX #6 - exact snippet (pasted into CSS)*/
+
+    .sidebar nav {
+       margin-top: 18px; 
+      }
+
+      /* A2 # 6 more fixes */
+      .sidebar nav ul {
+       list-style:none; 
+       padding:0; margin:0; 
+      }
+
+      .contentGridCard > div{
+        height:120px; 
+        background: linear-gradient(90deg,#0f1724,#08121b);
+        border-radius: 6px;
+        display: flex;
+        align-items:center;
+        justify-content: center;
+      }
+    
+
+    /* responsive small-screen tweak (deliberately too late because meta viewport missing) */
+    @media (max-width: 800px) {
+      .appPage1 { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .content-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- landing page -->
+  <div class="appPage1">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" role="navigation" aria-label="Main navigation">
+      <div class="brand" tabindex="0">Crystex Admin</div>
+
+      <!-- A2 FIX #6: remove inline style attribute below (style="margin-top:18px")
+           and use .sidebar nav { margin-top: 18px; } in the CSS (see comment above) -->
+      <nav>
+        <ul>
+          <li><a class="nav-item" href="#dashboard">Dashboard</a></li>
+          <li><a class="nav-item" href="#reports">Reports</a></li>
+          <li><a class="nav-item" href="#settings">Settings</a></li>
+          <li><a class="nav-item" href="#creatorPortfolio">Creator Portfolio</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <div class="user">
+          <!-- FIX #6 (done earlier): ensure alt attribute exists -->
+          <img class="user-avatar" src="/assets/media/images/my_avatar.jpg" alt="Favour Onyeisi Avatar"/>
+          <div>
+            <div class="name">Favour Onyeisi</div>
+            <div class="userRole">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main" role="main">
+      <div class="topbar" role="region" aria-label="Top bar">
+        <div class="search">Search... (broken demo)</div>
+        <div class="controls">
+          <!-- A2 FIX #5: remove inline style on this button (style="background-color: transparent; border: none;")
+               and leave only id="notifBtn". Then paste the #notifBtn CSS (see comment above). -->
+          <button  id="notifBtn" aria-label="Notifications">
+            <i class="fa-solid fa-bell"></i>
+          </button>
+        </div>
+      </div>
+
+      <section class="stats" aria-label="Statistics overview">
+        <!-- BUG: uses class names that CSS didn't target -->
+        <div class="stat-card">
+          <div class="k">Users</div>
+          <div class="v">3,420</div>
+        </div>
+        <div class="stat-card">
+          <div class="k">Revenue</div>
+          <div class="v">$12,430</div>
+        </div>
+        <div class="stat-card">
+          <div class="k">Errors</div>
+          <div class="v">18</div>
+        </div>
+      </section>
+
+      <section class="content-grid" aria-label="Main content grid">
+        <div class="card contentGridCard">
+          <h3>Live Chart</h3>
+          <div>(chart placeholder)</div>
+        </div>
+
+        <div class="card contentGridCard">
+          <h3>Recent Activity</h3>
+          <ul style="margin:0; padding:0 0 0 16px;">
+            <li>Server restart — 2h ago</li>
+            <li>User signup — 4h ago</li>
+          </ul>
+        </div>
+
+        <div class="card contentGridCard">
+          <h3>Tickets</h3>
+          <table aria-label="Tickets table">
+            <thead>
+              <tr><th>Id</th><th>Title</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>#23</td><td>Login issue</td><td>Open</td></tr>
+              <tr><td>#22</td><td>Payment bug</td><td>Resolved</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section style="margin-top:18px" aria-label="Footer area">
+        <div class="footer">© 2025 Crystex — All rights reserved</div>
+      </section>
+    </main>
+  </div>
+
+  <!-- end of landing page -->
+
+  <div class="appPage2" style="display: none; padding: 2%; height: 100vh; width: 100vh;">
+    <div class="appPage2_body">
+
+      <header style="display: flex; border-bottom: 1px solid rgb(131, 126, 143); padding: 20px;">
+        <div class="branding" style="display: flex;">
+          <div class="logo"><img style="width: 70px; height: 50px;" src="/assets/media/images/Cropped logo.png" alt="" srcset=""></div>
+          <span>CRYSTEX</span>
+        </div>
+        <nav>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contacts">Contacts</a>
+        </nav>
+      </header>
+
+      <main>
+
+        <div class="profile">
+          <h1>Hello, I'm Favour</h1>
+          <p>
+            Software Engineer and Founder of CRYSTEX.
+            I build clean, high-performance web applications
+            that focus on user experience.
+          </p>
+          <button type="button">Veiw My Work</button>
+        </div>
+
+        <div class="about">
+          <h3>About Me</h3>
+          <p>
+            My journey in software engineering is driven
+            by a passion for elegant problem-solving and
+            clean architecture. I specialize in the full-stack
+            ecosystem, with deep expertise in modern JavaScript
+            frameworks (React/Angular) and robust backend services
+            (Node.js/Python). My goal is always to deliver scalable
+            solutions that are maintainable and delightful to use.
+          </p>
+          <p>
+            The CRYSTEX logo represents my core philosophy: clarity,
+            precision, and foundational structure. I strive to bring
+            this crystalline focus to every project, ensuring robust
+            performance and beautiful design. Let's build something
+            exceptional together.
+          </p>
+        </div>
+
+        <div class="projects">
+          <h3>Featured Projects</h3>
+          <div class="projectCards">
+            <!-- autogenerated using js-->
+          </div>
+        </div>
+
+        <div class="contacts">
+          <h3>Let's Connect</h3>
+          <div>
+            <p>Hover over the card below to flip it
+              and download my contact details.
+            </p>
+            <img src="/assets/media/images/My_business_card.png" alt="" srcset="">
+            <div style="display: grid;">
+              <div class="bizCardLogo"><img style="width: 70px; height: 50px;" src="/assets/media/images/Cropped logo.png" alt="" srcset=""></div>
+              <div>CRYSTEX</div>
+              <div>Favour</div>
+              <div>Software Engineer</div>
+              <div>
+                 <div>
+                  <i style="display: block;" class="fa-regular fa-envelope" style="color: rgb(255, 255, 255);"></i>
+                  <i style="display: block;" class="fa-solid fa-globe" style="color: rgb(255, 255, 255);"></i>
+                  <i style="display: block;" class="fa-solid fa-phone" style="color: rgb(255, 255, 255);"></i>
+                </div>
+                 <div>
+                  <span style="display: block;">onyeisifavour02@gmail.com</span>
+                  <span style="display: block;">www.crystex.com</span>
+                  <span style="display: block;">+2347081926298</span>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+      <footer>
+        <div>© 2025 Favour. All rights reserved. | Built with Clarity and Precision.</div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // Small JS with a deliberate selector typo — not required for Set 1, but will be used later
+    document.getElementById('notifBtn').addEventListener('click', function () {
+      console.log('open notifications');
+      // BUG: this selector purposely wrong for later tests
+      const avatar = document.querySelector('.user-img');
+      if (!avatar) {
+        console.warn('avatar not found (expected .user-img)'); // intentional
+      }
+    });
+  </script>
+</body>
 </html>
