@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <!-- Styles go here -->
+        <style>
+            *{box-sizing: border-box; margin: 0;}
+
+            body{
+                padding: 0;
+                background-color: rgb(255, 255, 255);
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            .line{
+                padding: 2% 2% 0 2%;
+                min-height: 80px;
+                background-color: rgb(246, 246, 246);
+                height: 20vh;
+                max-width: 100%;
+                border-radius: 0 0 15px 15px;
+            }
+
+            .site-header{
+                background-color: rgb(252, 252, 252);
+                width: 100%;
+                padding: 10px 1%;
+                display: flex;
+                align-items: center;
+                border-bottom: 0.5px solid rgb(173, 173, 173);
+                padding: 1%;
+            }
+
+                /* Add styles for your new logo image */
+            .site-logo {
+                max-height: 100px; /* 40px too small for my logo - logo is tiny  */
+                /* You can set a specific max-width if needed */
+                width: auto;
+                object-fit: contain;
+            }
+
+            .logo-wrap { flex: 0 0 auto; margin-right: 0 }
+
+            nav{
+                margin: 0 auto;
+                margin-right: auto; /* Add some space between nav and avatar */
+            }
+        
+            a{
+                text-decoration: none;
+                color: rgb(73, 73, 73);
+                border: none;
+                padding: 8px 10px;
+                font-weight: 500;
+            }
+
+            .user-avatar{
+                width: 40px;
+                height: 40px;
+                border-radius:50%;
+                border: 2px solid rgb(75, 75, 75); /* purple accent */
+                box-shadow: 0 0 0 3px rgba(124,58,237,0.06);
+            }
+
+            .profile { flex: 0 0 auto; margin-left: 0; }
+
+
+        </style>
+    </head>
+    <body>
+        <header class="line">
+    <div class="site-header">
+      <div class="logo-wrap">
+        <img class="site-logo" src="./assets/media/images/logo_grey_variation-removebg-preview.png" alt="Crystex Logo">
+      </div>
+
+      <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#reports">Reports</a>
+        <a href="#settings">Settings</a>
+      </nav>
+
+      <div class="profile" aria-label="User profile">
+        <img class="user-avatar" src="./assets/media/images/my_avatar.jpg" alt="Favour Onyeisi Avatar">
+      </div>
+    </div>
+  </header>
+    </body>
+</html>
