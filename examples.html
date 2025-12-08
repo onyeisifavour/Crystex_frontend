@@ -5,296 +5,11 @@
   <!--FIX #1added viewport meta tag-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard — (buggy)</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <style>
-    /* ================
-       BUGGY DARK THEME CSS (intentionally contains mistakes)
-       Fixes for these will be asked in Set 1
-       ================ */
 
-    /* FIX #2 added global box-sizing property */
-    *{ box-sizing: border-box; }
+  <style></style>
 
-    :root {
-      --bg: #0b1220;
-      --panel: #0f1724;
-      --muted: #9aa4b2;
-      --accent: #7c3aed; /* purple */
-      --danger: #ef4444;
-    }
-
-    body {
-      margin: 0;
-      background: linear-gradient(180deg, #071021 0%, var(--bg) 100%);
-      color: #cbd5e1;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      /* missing box-sizing could cause spacing surprises */
-    }
-
-    /* ---------------------------------------
-       A2 FIX #2: responsive grid column sizing
-       Replace the line below (grid-template-columns: 240px 1fr;)
-       with the snippet shown in the comment when you apply FIX #2.
-       --------------------------------------- */
-    .appPage1 {
-      display: grid;
-      grid-template-columns: 240px minmax(0, 1fr);  /* <-- A2 FIX #2: changed 240px 1fr to: 240px minmax(0, 1fr) */
-      min-height: 100vh;
-    }
-    /* A2 FIX #2 - exact replacement (paste into your CSS to apply):
-    .appPage1 {
-      display: grid;
-      grid-template-columns: 240px minmax(0, 1fr); allow second column to shrink 
-      min-height: 100vh;
-    }*/
-
-    /* Sidebar: NOTE the selector deliberately misspelled below (.nav-itm) */
-    .sidebar {
-      background: rgba(4,6,12,0.6);
-      padding: 18px 12px;
-      border-right: 1px solid rgba(255,255,255,0.03);
-    }
-
-    /* BUG: CSS targets .nav-itm but HTML uses .nav-item */
-    /*A1 FIX #3 corrected nav item typo*/
-    .nav-item {
-      display: block;
-      padding: 12px 10px;
-      color: #94a3b8;
-      text-decoration: none;
-      border-radius: 8px;
-    }
-
-    /* Top bar */
-    .topbar {
-      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      padding: 12px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      
-      /*A2 FIX #1 Applied style changes e.g sticky position*/
-      position: sticky;
-      top: 0;
-      z-index: 60;
-      backdrop-filter: blur(6px);
-      background: linear-gradient(90deg, rgba(11,18,32,0.85), rgba(11,18,32,0.85)); /* ensure visible when over content */
-    }
-    /* ---------------------------------------
-       A2 FIX #1 — make topbar sticky
-       Add/replace the rule above with the snippet below (paste to apply)
-       --------------------------------------- */
-    /* A2 FIX #1 - exact snippet (paste into CSS)
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 60;            / * keep it above content * /
-      backdrop-filter: blur(6px);
-      background: linear-gradient(90deg, rgba(11,18,32,0.85), rgba(11,18,32,0.85));
-      padding: 12px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    */
-
-    .brand {
-      /* A1 FIX #4 Removed !important selector */
-      /* BUG: Using !important here to create a specificity trap */
-      color: #ffffff;
-      font-weight: 700;
-      letter-spacing: 0.4px;
-    }
-
-    .search {
-      background: rgba(255,255,255,0.03);
-      padding: 8px 12px;
-      border-radius: 8px;
-      color: var(--muted);
-      border: 1px solid rgba(255,255,255,0.03);
-    }
-
-    /* Panels section */
-    /* ---------------------------------------
-       A2 FIX #4 — prevent margin collapse on .main
-       Add the padding-top:1px line shown in the comment to apply FIX #4
-       --------------------------------------- */
-    .main {
-      background: transparent;
-      padding: 20px;
-      padding-top: 1px;
-      /* A2 FIX #4: add small padding to stop margin collapsing:
-         padding-top: 1px;  / * A2 FIX #4 * /
-      */
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    /* BUG: CSS expects .card inside .stats as .stats .card, but HTML uses .stat-card */
-    /* A1 FIX #5 corrected and used the right selector */
-    .stats .stat-card {
-      padding: 14px;
-      background: var(--panel);
-      border-radius: 10px;
-      color: #e6eef8;
-      box-shadow: 0 4px 18px rgba(2,6,23,0.6);
-    }
-
-    /* Content grid items */
-    .content-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-
-    .card {
-      background: #0e1624;
-      border-radius: 10px;
-      padding: 14px;
-      color: #dbeafe;
-    }
-
-    /* ---------------------------------------
-       A2 FIX #3 — allow grid children to shrink inside columns
-       Add the snippet below (uncomment/paste) to enable A2 FIX #3
-       --------------------------------------- */
-    /* A2 FIX #3 - exact snippet (pasted into CSS)*/
-    .content-grid > .card,
-    .stats > .stat-card {
-      min-width: 0;
-      overflow-wrap: anywhere;
-    }
-
-    /* BUG: Specificity trap - this rule uses a long chain and will override simple fixes */
-    /*A1 #FIX7 added another class to target them specifically */
-    .contentGridCard {
-      border: 1px solid rgba(55, 0, 255, 0);
-    }
-
-    /* table */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-      color: #cbd5e1;
-    }
-
-    th, td {
-      text-align: left;
-      padding: 10px 12px;
-    }
-
-    tr:nth-child(even) {
-      background: rgba(255,255,255,0.02);
-    }
-
-    /* small user avatar styling (there is also an inline style to create a priority bug) */
-    .user {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      margin-top:20px /*another A2 #6 fix(removing inline styles*/
-    }
-
-    .user .name {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    /* footer */
-    .footer {
-      padding: 20px;
-      color: #94a3b8;
-      font-size: 13px;
-    }
-
-    /* A1 #FIX 6 created class to handle user avatar border */
-    .user-avatar{
-      width: 40px;
-      height: 40px;
-      border-radius:50%;
-      border: 2px solid rgba(124, 58, 237, 0.9); /* purple accent */
-      box-shadow: 0 0 0 3px rgba(124,58,237,0.06);
-    }
-
-    .userRole{color: #9aa4b2;} /*another A2 #6 fix(removing inline styles*/
-
-    /* ---------------------------------------
-       A2 FIX #5 — notification button styling
-       Add the #notifBtn rule below into the CSS and remove inline style on the button in HTML.
-
-                DONE
-       --------------------------------------- */
-    #notifBtn{
-     font-size: 25px; color: rgb(255, 217, 0);
-     background: transparent;
-     border: none;
-     padding: 6px;
-     cursor: pointer;
-     display: inline-flex;
-     align-items: center;
-     justify-content: center;
-    }
-
-    #notifBtn:focus {
-      outline: 2px solid rgba(124,58,237,0.5);
-      outline-offset: 2px;
-    }
-
-    /* A2 FIX #5 - exact snippet (paste into CSS)
-    #notifBtn {
-      background: transparent;
-      border: none;
-      padding: 6px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #notifBtn:focus {
-      outline: 2px solid rgba(124,58,237,0.5);
-      outline-offset: 2px;
-    }
-    */
-
-    /* ---------------------------------------
-       A2 FIX #6 — move inline nav margin to CSS
-       Remove inline style="margin-top:18px" from the <nav> HTML and use this rule:
-       --------------------------------------- */
-    /* A2 FIX #6 - exact snippet (pasted into CSS)*/
-
-    .sidebar nav {
-       margin-top: 18px; 
-      }
-
-      /* A2 # 6 more fixes */
-      .sidebar nav ul {
-       list-style:none; 
-       padding:0; margin:0; 
-      }
-
-      .contentGridCard > div{
-        height:120px; 
-        background: linear-gradient(90deg,#0f1724,#08121b);
-        border-radius: 6px;
-        display: flex;
-        align-items:center;
-        justify-content: center;
-      }
-    
-
-    /* responsive small-screen tweak (deliberately too late because meta viewport missing) */
-    @media (max-width: 800px) {
-      .appPage1 { grid-template-columns: 1fr; }
-      .stats { grid-template-columns: repeat(2, 1fr); }
-      .content-grid { grid-template-columns: 1fr; }
-    }
-  </style>
 </head>
 
 <body>
@@ -319,10 +34,10 @@
       <div>
         <div class="user">
           <!-- FIX #6 (done earlier): ensure alt attribute exists -->
-          <img class="user-avatar" src="/assets/media/images/my_avatar.jpg" alt="Favour Onyeisi Avatar"/>
+          <img class="user-avatar" src=".//assets/media/images/my_avatar.jpg" alt="Favour Onyeisi Avatar"/>
           <div>
             <div class="name">Favour Onyeisi</div>
-            <div class="userRole">Administrator</div>
+            <div class="userRole">Administrator</div> 
           </div>
         </div>
       </div>
@@ -391,14 +106,17 @@
     </main>
   </div>
 
-  <!-- end of landing page -->
+  <!--  **********************
 
-  <div class="appPage2" style="display: none; padding: 2%; height: 100vh; width: 100vh;">
-    <div class="appPage2_body">
+          end of landing page 
 
-      <header style="display: flex; border-bottom: 1px solid rgb(131, 126, 143); padding: 20px;">
-        <div class="branding" style="display: flex;">
-          <div class="logo"><img style="width: 70px; height: 50px;" src="/assets/media/images/Cropped logo.png" alt="" srcset=""></div>
+        **********************  -->
+
+   <div class="appPage2"> <div class="appPage2_body">
+
+      <header class="appPage2_header" style="">
+        <div class="branding" style="">
+          <div class="logo"><img class="logo" style="" src=".//assets/media/images/Cropped logo.png" alt="" srcset=""></div>
           <span>CRYSTEX</span>
         </div>
         <nav>
@@ -409,7 +127,6 @@
       </header>
 
       <main>
-
         <div class="profile">
           <h1>Hello, I'm Favour</h1>
           <p>
@@ -453,9 +170,9 @@
             <p>Hover over the card below to flip it
               and download my contact details.
             </p>
-            <img src="/assets/media/images/My_business_card.png" alt="" srcset="">
+            <img style="width: 70px; height: 50px;"src="/assets/media/images/My_business_card.png" alt="" srcset="">
             <div style="display: grid;">
-              <div class="bizCardLogo"><img style="width: 70px; height: 50px;" src="/assets/media/images/Cropped logo.png" alt="" srcset=""></div>
+              <div><img class="logo bizCardLogo" src=".//assets/media/images/Cropped logo.png" alt="" srcset=""></div>
               <div>CRYSTEX</div>
               <div>Favour</div>
               <div>Software Engineer</div>
@@ -473,15 +190,15 @@
               </div>
             </div>
             </div>
-          </div>
         </div>
-
       </main>
+
       <footer>
         <div>© 2025 Favour. All rights reserved. | Built with Clarity and Precision.</div>
       </footer>
     </div>
-  </div>
+
+    </div>
 
   <script>
     // Small JS with a deliberate selector typo — not required for Set 1, but will be used later
