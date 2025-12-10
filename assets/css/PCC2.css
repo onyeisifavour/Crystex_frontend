@@ -1,1 +1,35 @@
+*{margin:0; padding: 0; box-sizing: border-box;}
 
+body{
+    background-color: rgb(255, 250, 242);
+}
+
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: stretch;
+}
+
+.card{
+    background-color: rgb(245, 250, 255);
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 300px;
+}
+
+.card .body{
+    flex: 1;
+}
+
+.card--emphasize{
+    flex: 2 1 300px;
+}
+
+@media (max-width:600px) {
+    .card{
+        min-width: 0;
+        flex-basis: 100%;
+    }
+}
