@@ -31,7 +31,7 @@
        --------------------------------------- */
     .appPage1 {
     
-      display: none;
+      display: block;
       grid-template-columns: 240px minmax(0, 1fr);  /* <-- A2 FIX #2: changed 240px 1fr to: 240px minmax(0, 1fr) */
       min-height: 100vh;
     }
@@ -303,7 +303,7 @@
     
     .appPage2{
         cursor: ;
-        display: block;
+        display: none;
         padding: 2%;
         height: 100vh;
         width: 100vh;
