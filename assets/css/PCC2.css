@@ -2,26 +2,42 @@
 
 body{
     background-color: rgb(255, 250, 242);
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.wrap{
+    height: fit-content;
 }
 
 .cards{
+    margin: 20px;
+    padding: 20px;
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
     align-items: stretch;
+    background-color: white;
+    border-radius: 12px;
 }
 
 .card{
     background-color: rgb(245, 250, 255);
     min-width: 300px;
     display: flex;
+    border-radius: 12px;
     flex-direction: column;
     flex: 1 1 300px;
+    height: 150px;
+    align-items: center;
+    justify-content: center;
 }
 
 .card .body{
     flex: 1;
 }
+
 
 .card--emphasize{
     flex: 2 1 300px;

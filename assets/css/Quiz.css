@@ -1,0 +1,251 @@
+/* ------------- reset ------------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ------------- fonts ------------- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gorditas:wght@700&display=swap');
+
+/* ------------- base / page layout ------------- */
+html, body { height: 100%; }
+body {
+  font-family: 'Montserrat', system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  background: #F1FCFF; /* rgb(241,252,255) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  min-height: 100vh;
+  color: #111;
+}
+
+/* center container for quiz area (hidden until quiz starts) */
+.parentDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: #fff;
+  padding: 6% 5%;
+  border-radius: 12px;
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
+  max-width: 920px;
+  width: calc(100% - 40px);
+}
+
+/* helper class to hide sections until JS reveals them */
+.hidden { display: none !important; }
+
+/* ---------- question ---------- */
+.quest {
+  font-size: clamp(28px, 6vw, 70px); /* responsive */
+  text-align: center;
+  padding-bottom: 12px;
+  line-height: 1.05;
+}
+
+/* ---------- answers layout ---------- */
+.answers{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 8px 0;
+}
+
+/* each answer option */
+.answer-option {
+  padding: 18px 22px;
+  border: 1px solid rgb(158,157,157);
+  border-radius: 8px;
+  transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
+  min-width: 160px;
+  max-width: 42%;
+  text-align: center;
+  cursor: pointer;
+  background: #fff;
+  user-select: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  outline: none;
+}
+
+/* responsive sizing on small screens: make options full width */
+@media (max-width: 560px) {
+  .answer-option { max-width: 100%; min-width: auto; }
+}
+
+/* hover and focus */
+.answer-option:hover,
+.answer-option:focus {
+  transform: translateY(-4px) scale(1.02);
+  background-color: rgba(192,192,192,0.15);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* keyboard-visible focus */
+.answer-option:focus-visible { box-shadow: 0 0 0 4px rgba(0,76,153,0.12); transform: translateY(-2px); }
+
+/* correct / wrong feedback */
+.answer-option.correct { background: #2ecc71; color: #fff; border-color: #27ae60; }
+.answer-option.wrong   { background: #e74c3c; color: #fff; border-color: #c0392b; }
+
+/* keep slight margin between options on large screens */
+.answers .answer-option { margin: 6px; }
+
+/* ---------- start screen & Figma card ---------- */
+/* make .card visible by default and use .hidden to hide things */
+.card {
+  display: block;
+  width: min(368px, 92vw);
+  height: 521px;
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* start screen container (keeps previous layout) */
+.startScreen { display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+
+/* clickable feel for start button */
+.start-btn { cursor: pointer; }
+.start-btn:focus-visible { outline: 3px solid rgba(0,76,153,0.18); border-radius: 8px; }
+
+/* card visual (keeps Figma feel) */
+/* Ready / set lines and quiz word (keeps positioning from your design) */
+.ready,
+.set {
+  width: 280px;
+  height: 69px;
+  left: 44px;
+  position: absolute;
+  text-align: center;
+  color: #000;
+  font-size: 68px;
+  font-family: "Gorditas", serif;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ready  { top: 95px; }
+.set    { top: 173px; }
+
+/* QUIZ big word */
+.quiz {
+  position: absolute;
+  left: 56px;
+  top: 260px;
+  text-align: center;
+  color: #000;
+  font-size: 96px;
+  font-family: "Gorditas", serif;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* red decorative line */
+.red-line {
+  width: 121px;
+  height: 10px;
+  left: 133px;
+  top: 371px;
+  position: absolute;
+  background: #FF0000;
+  border-radius: 4px;
+}
+
+/* settings small label */
+.settings-text {
+  left: 56px;
+  top: 460px;
+  position: absolute;
+  text-align: center;
+  color: rgba(0, 0, 0, 1);
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+/* START button block */
+.start-btn {
+  width: 294px;
+  height: 42px;
+  position: absolute;
+  top: 400px;
+  left: 42px;
+}
+
+.start-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #004C99;
+  border-radius: 50px;
+}
+
+.start-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* ---------- settings panel ---------- */
+.settingsCard { /* visible by default; control show/hide with .hidden in HTML/JS */ }
+
+.settings-panel {
+  width: 368px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+}
+
+.heading {
+  width: 198px;
+  height: 38px;
+  text-align: center;
+  color: #004C99;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 38px;
+}
+
+.label {
+  display:block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #000;
+  margin-top: 6px;
+}
+
+.input {
+  width: 286px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #ACABAB;
+  padding: 6px 10px;
+  font-size: 14px;
+  background: #fff;
+}
+
+/* slightly smaller input variant */
+.input.small { height: 32px; }
+
+/* remove native arrow on select on some browsers for consistent look */
+.select { appearance: none; -webkit-appearance: none; -moz-appearance: none; }
+
+/* spacing for the form */
+.settings-form { display:flex; flex-direction:column; gap:8px; }
