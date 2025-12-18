@@ -20,8 +20,9 @@
             <div class="settings-text">settings</div>
 
             <div class="start-btn" tabindex="0" role="button">
-                <div class="start-bg"></div>
+                <div class="start-bg">
                 <div class="start-text">START</div>
+                </div>
             </div>
         </div>
     </div>
@@ -32,12 +33,9 @@
             <div class="heading">Quiz Settings</div>
 
             <form id="quizSettings" class="settings-form" autocomplete="off" novalidate>
-                
-                <label class="label" for="quizTitle">Quiz Title</label>
-                <input class="input" id="quizTitle" name="quizTitle" type="text">
 
                 <label class="label" for="numQuestions">Number of Questions</label>
-                <input class="input" id="numQuestions" name="numQuestions" type="number" min="1" value="20">
+                <input class="input" id="numQuestions" name="numQuestions" type="number" min="1" value="50">
 
                 <label class="label" for="numOptions">Number of Options per Question</label>
                 <select class="input select" id="numOptions" name="numOptions">
@@ -48,7 +46,7 @@
                 </select>
 
                 <label class="label" for="timeLimit">Time Limit (minutes)</label>
-                <input class="input" id="timeLimit" name="timeLimit" type="number" min="1" value="15">
+                <input class="input" id="timeLimit" name="timeLimit" type="number" min="1" value="5">
 
                 <label class="label" for="difficulty">Difficulty Level</label>
                 <select class="input select" id="difficulty" name="difficulty">
@@ -59,16 +57,39 @@
 
                 <label class="label" for="category">Category</label>
                 <input class="input" id="category" name="category" type="text">
-
+                
+                <div class="formBtnContainer">
+                    <button class="formBtn cancelBtn">cancel</button>
+                    <button class="formBtn saveBtn">save</button>
+                </div>
             </form>
         </div>
     </div>
 
     <!-- Quiz Area -->
-    <div class="parentDiv hidden">
+    <div class="parentDiv retro-quiz-page hidden">
+
+        <div class="timerContainer">
+            <span id="timer">00:00:00</span>
+        </div>
         <div class="quest"></div>
         <div class="answers"></div>
+
     </div>
+
+    <!-- stats page is now avalaible -->
+     <div class="card statsPage hidden">
+        <div class="scoreCard">
+            <div id="percentGradient">
+                <div></div>
+            </div>
+        </div>
+     </div>
+
+     <!-- we need a alert in necessary places -->
+      <div class="alertPage hidden">
+        <div class="alertDiv"></div>
+      </div>
 
     <script src="./assets/js/Quiz.js"></script>
 </body>

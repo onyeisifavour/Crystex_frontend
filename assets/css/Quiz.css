@@ -1,5 +1,5 @@
 /* ------------- reset ------------- */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none;}
 
 /* ------------- fonts ------------- */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
@@ -21,6 +21,7 @@ body {
 /* center container for quiz area (hidden until quiz starts) */
 .parentDiv {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -151,7 +152,7 @@ body {
   width: 121px;
   height: 10px;
   left: 133px;
-  top: 371px;
+  top: 365px;
   position: absolute;
   background: #FF0000;
   border-radius: 4px;
@@ -159,6 +160,7 @@ body {
 
 /* settings small label */
 .settings-text {
+  cursor: pointer;
   left: 56px;
   top: 460px;
   position: absolute;
@@ -166,6 +168,10 @@ body {
   color: rgba(0, 0, 0, 1);
   font-size: 12px;
   text-decoration: underline;
+  transition: 0.1s;
+}
+.settings-text:hover{
+  scale: 1.05;
 }
 
 /* START button block */
@@ -173,7 +179,7 @@ body {
   width: 294px;
   height: 42px;
   position: absolute;
-  top: 400px;
+  top: 415px;
   left: 42px;
 }
 
@@ -185,6 +191,11 @@ body {
   height: 100%;
   background: #004C99;
   border-radius: 50px;
+  transition: 0.1s ease-in-out;
+}
+.start-bg:hover{
+  background-color: #004386;
+  scale: 1.02;
 }
 
 .start-text {
@@ -200,6 +211,7 @@ body {
   font-weight: 700;
 }
 
+
 /* ---------- settings panel ---------- */
 .settingsCard { /* visible by default; control show/hide with .hidden in HTML/JS */ }
 
@@ -211,6 +223,7 @@ body {
   justify-content: center;
   gap: 8px;
   padding: 12px;
+  padding-top: 22px;
 }
 
 .heading {
@@ -249,3 +262,150 @@ body {
 
 /* spacing for the form */
 .settings-form { display:flex; flex-direction:column; gap:8px; }
+
+
+/* ---------- RETRO STYLES: Entire Quiz Page Reversion (Targeting .parentDiv) ---------- */
+
+/* Applies to: <div class="parentDiv retro-quiz-page hidden">...</div>
+   This safely reverts the look of the quiz questions without affecting 
+   .startScreen or .settingsCard elements.
+*/
+
+/* 1. Revert the main container (.parentDiv) layout and sizing */
+.retro-quiz-page {
+    /* Revert to old sizing/padding */
+    min-width: 350px;
+    height: fit-content;
+    padding: 10% 7%; /* Revert to old percentage padding */
+    box-sizing: border-box; 
+    margin: 0;
+
+    /* Override new max-width/fixed width and gap */
+    max-width: none;
+    width: auto;
+    gap: 0; 
+}
+
+/* 2. Revert the Question text (.quest) styling */
+.retro-quiz-page .quest {
+    font-size: 70px; /* Revert to fixed font size */
+    padding-bottom: 25px; /* Revert to old padding */
+    line-height: initial; /* Remove new line-height adjustment */
+}
+
+/* 3. Revert the Answers Container (.answers) layout */
+.retro-quiz-page .answers {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    flex-direction: row; /* Ensure it stays in a row */
+    justify-content: space-evenly; /* Revert to old spacing */
+    width: 125%; /* Revert to old width that was 125% of the old parentDiv */
+    margin: 0;
+    gap: 0;
+    padding: 0;
+}
+
+/* 4. Revert the individual Answer Options (.answer-option) styling */
+.retro-quiz-page .answer-option {
+    /* Revert padding, border thickness, and border radius */
+    padding: 20px;
+    border: 0.5px solid rgb(158, 157, 157);
+    border-radius: 5px;
+    
+    /* Reset new box shadow and transformation effects */
+    box-shadow: none; 
+    transform: none; 
+    transition: 0.15s; 
+    margin: 0; /* Remove margin/gap from new code */
+    min-width: auto;
+    max-width: none;
+}
+
+/* 5. Revert the Answer Option hover effect */
+.retro-quiz-page .answer-option:hover {
+    background-color: rgba(192, 192, 192, 0.3);
+    cursor: pointer;
+    scale: 1.05; /* Revert to old scaling effect */
+    transform: none; 
+    box-shadow: none;
+    transition: 0.15s;
+}
+
+.timerContainer {
+  position: absolute;
+  top: 16px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 16px;
+  border-radius: 999px; /* pill */
+
+  background-color: transparent;
+  border: 1.5px solid #004C99; /* calm quiz blue */
+
+  color: #004C99;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+
+  letter-spacing: 0.06em;
+}
+
+
+/* .timerContainer{
+  top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  min-width: 100%;
+  min-height: fit-content;
+  padding: 7px;
+  background-color: #FF0000;
+  color: #fff;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 700;
+  font-size: 20px;
+} */
+
+
+/*
+====================================
+YOURS COMMENTED OUT
+====================================
+*/
+
+/*.timerContainer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 180px;  */    /* prevents width jump */
+  /*padding: 14px 28px;
+
+  background: #111;*/      /* slightly deeper black */
+  /*border-radius: 14px;
+
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.18),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+#timer {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 2.2rem;
+  font-weight: 500;
+
+  letter-spacing: 0.18em;*/ /* more controlled than px */
+  /*color: #ffffff;
+
+  line-height: 1;*/       /* perfect vertical alignment */
+ /* user-select: none;
+}*/
+
+.formBtn{
+  display: flex;
+  width: 60px;
+}
