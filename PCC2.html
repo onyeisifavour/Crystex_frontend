@@ -4,21 +4,37 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Crystex-FlexCards Demo 2</title>
-  <link rel="stylesheet" href=".//assets/css/PCC2.css">
-
-  <style>
-    /* YOUR CSS: implement the required flex rules here.
-       Hint keywords: flex, flex-wrap, align-items, min-width, flex-basis, media query */
-  </style>
+  <link rel="stylesheet" href="./assets/css/PCC2.css">
 </head>
 <body>
   <main class="wrap">
     <section class="cards">
-      <article class="card"> <h3>Card 1</h3> <p>content</p> </article>
-      <article class="card"> <h3>Card 2</h3> <p>content</p> </article>
-      <article class="card card--emphasize"> <h3>Card 3 (emphasized)</h3> <p>content</p> </article>
-      <article class="card"> <h3>Card 4</h3> <p>content</p> </article>
-      <article class="card"> <h3>Card 5</h3> <p>content</p> </article>
+      
+      <article class="card"> 
+        <h3>Card 1</h3> 
+        <div class="body"><p>Short content.</p></div> 
+      </article>
+
+      <article class="card"> 
+        <h3>Card 2</h3> 
+        <div class="body"><p>This card has much more content. Because of "align-items: stretch", Card 1 and Card 3 will grow to match this height automatically!</p></div> 
+      </article>
+
+      <article class="card card--emphasize"> 
+        <h3>Card 3 (emphasized)</h3> 
+        <div class="body"><p>I am wider than the others.</p></div> 
+      </article>
+
+      <article class="card"> 
+        <h3>Card 4</h3> 
+        <div class="body"><p>Content here.</p></div> 
+      </article>
+
+      <article class="card"> 
+        <h3>Card 5</h3> 
+        <div class="body"><p>Content here.</p></div> 
+      </article>
+
     </section>
   </main>
 </body>
