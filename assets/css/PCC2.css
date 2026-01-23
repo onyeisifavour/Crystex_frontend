@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -29,6 +30,7 @@ body {
 
 .card {
     background-color: rgb(245, 250, 255);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     border-radius: 12px;
     padding: 20px;
     min-width: 300px;
@@ -51,4 +53,21 @@ body {
         flex-basis: 100%;
         min-width: 0;
     }
+}
+
+button{
+    border: none;
+    padding: 20px;
+    border-radius: 999px;
+    background-color: rgb(255, 255, 255);
+    align-self: center;
+    width: 180px;
+    font-size: 14px;
+    transition: 0.15s ease-in;
+}
+
+button:hover{
+    scale: 1.05;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
