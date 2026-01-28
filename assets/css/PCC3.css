@@ -2,7 +2,7 @@
 
 body{
     background-color: #fffaebb1;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
 .app{
@@ -10,13 +10,13 @@ body{
     height: 100vh;
     width: 100%;
     gap: 5px;
-    padding-top: 0.5%;
 }
 
 .sidebar{
     display: flex;
     flex-direction: column;
     width: 240px;
+    flex-shrink: 0; 
     background-color: #0b1220;
     border-right: 0.5px solid rgb(230, 230, 230);
     border-radius: 0 8px 8px 0;
@@ -31,27 +31,26 @@ body{
     background-color: #f4f7fb;
     padding: 12px 0 0 0;
     border-radius: 8px 0 0 8px;
+    overflow-y: auto; 
 }
 
 .main-header{
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 5px;
-    padding-right: 15px;
-    width: 100%;
+    padding: 5px 15px 5px 5px;
     background-color: white;
     height: 10vh;
 }
 
 .search{
-    display: grid;
-    min-width: 500px;
+    display: flex;
+    flex: 1 1 300px;
     max-width: 500px;
-    grid-template-columns: 4fr 60px;
     margin: auto;
-
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .search > input {
@@ -59,6 +58,8 @@ body{
     border-radius: 50px 0 0 50px;
     padding: 10px 20px;
     height: 35px;
+    flex: 1 1 auto;
+    max-width: 500px;
 }
 
 .search > div{
@@ -67,7 +68,7 @@ body{
     border-radius: 0 50px 50px 0;
     padding: 10px 20px;
     height: 35px;
-    
+    flex: 0 0 60px;
 }
 
 .logo{
@@ -80,6 +81,7 @@ body{
     gap: 8px;
     align-items: center;
     flex: 0 0 auto;
+    margin-left: 10px;
 }
 
 .actions > button{
@@ -103,4 +105,26 @@ body{
     padding: 16px;
     border-radius: 8px;
     box-shadow: 0 1px 0 rgba(11,18,32,0.04);
+    flex: 1 1 260px; /* Merged from .main-content .col */
+}
+
+@media (max-width:700px){
+    .main-header {
+        flex-direction: column;
+        align-items: stretch;
+        height: auto; /* Changed from 15vh to prevent content clipping */
+        min-height: 15vh;
+        max-height: 20vh;
+    }
+    
+    .sidebar{
+        max-width: 200px;
+    }
+    
+    .actions { order: 1; padding-left: 10%;}
+    .search { order: 2;}
+
+    .main-content .col {
+        flex-basis: 100%;
+    }
 }
