@@ -1,56 +1,120 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Crystex-FlexCards Demo 2</title>
-  <link rel="stylesheet" href="./assets/css/PCC2.css">
-</head>
-<body>
-  <main class="wrap">
-    <section class="cards">
-      
-      <article class="card"> 
-        <h3>Card 1</h3> 
-        <div class="body">
-          <p>Short content.</p>
-        </div>
-        <button>Action</button>
-      </article>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <!-- Styles moved to styles file -->
+        <link rel="stylesheet" href="./assets/css/PCC2.css">
+    </head>
+    <body>
 
-      <article class="card"> 
-        <h3>Card 2</h3> 
-        <div class="body">
-          <p>This card has much more content. Because of "align-items: stretch", Card 1 and Card 3 will grow to match this height automatically!</p>
+      <!-- header region -->
+      <header class="line">
+        <div class="headerInfoDiv">
+          <div class="pageTitle">CodeMaster Dashboard</div>
+          <div class="userProfile div">
+            <div class="userProfile name">Profile</div>
+            <div class="userProfile pic"></div>
+          </div>
         </div>
-        <button>Action</button> 
-      </article>
+      </header>
 
-      <article class="card card--emphasize"> 
-        <h3>Card 3 (emphasized)</h3> 
-        <div class="body">
-          <p>I am wider than the others.</p>
+      <aside class="sidebar">
+        <div class="sidebar linksContainer">
+
+          <div class="sidebar menu label">MENU</div>
+
+          <div class="sidebar menu navsLink">
+            <nav>
+              <ul>
+                <li><a href="#overveiw">Overveiw</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#progress">Progress</a></li>
+                <li><a href="#settings">Settings</a></li>
+              </ul>
+            </nav>
+          </div>
+
         </div>
-        <button>Action</button> 
-      </article>
+      </aside>
 
-      <article class="card"> 
-        <h3>Card 4</h3> 
-        <div class="body">
-          <p>Content here.</p>
-        </div>
-        <button>Action</button>
-      </article>
+      <main>
+        
+        <section class="hero mainContainer">
 
-      <article class="card"> 
-        <h3>Card 5</h3> 
-        <div class="body">
-          <p>Content here.</p>
-        </div>
-        <button>Action</button>
-      </article>
+          <div class="hero textContainer">
+            <div class="hero term" id="welcome">WELCOME</div>
+            <div class="hero term" id="to">to</div>
+            <div class="hero term" id="codemaster">CodeMaster Academy</div>
+          </div>
 
-    </section>
-  </main>
-</body>
+        </section>
+
+        <section class="overveiw mainContainer">
+          <div class="overveiw titleText">OVERVIEW</div>
+        </section>
+
+        <section class="courses mainContainer">
+          <div class="courses titleText">COURSES</div>
+          <div class="courses courseCards container">
+
+          </div>
+        </section>
+
+        <section class="progress mainContainer">
+          <div class="progress titleText">PROGRESS</div>
+        </section>
+
+        <section class="settings mainContainer">
+          <div class="settings titleText">SETTINGS</div>
+          <div class="settings infoContainer" style="font-size: 16px;">
+
+            <!-- <p>
+              See what you have turned on in
+              settings and make changes
+            </p>
+
+            <ul>
+
+              <li style="display: flex; align-items: center; gap: 10px; list-style: none; font-size: 16px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+                <span>Profile and Security</span>
+              </li>
+
+              <li style="display: flex; align-items: center; gap: 10px; list-style: none;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+                <span>Preferences</span>
+              </li>
+
+              <li style="display: flex; align-items: center; gap: 10px; list-style: none;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+                <span>Notifications</span>
+              </li>
+
+              <li style="display: flex; align-items: center; gap: 10px; list-style: none;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+                <span>Subscriptions</span>
+              </li>
+              
+            </ul> -->
+
+          </div>
+        </section>
+
+      </main>
+
+      <footer>
+        <p> &copy; 2025 | Crystex Dev Team</p>
+      </footer>
+
+    </body>
 </html>

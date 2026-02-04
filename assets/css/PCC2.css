@@ -1,3 +1,8 @@
+:root{
+    --header-height: 85px;
+    --II-header-height: 60px;
+}
+
 /* 1. Global Reset */
 * {
     margin: 0;
@@ -8,66 +13,270 @@
 
 body {
     background-color: rgb(255, 250, 242);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: minmax(200px, 20%) 1fr;
+    grid-template-rows:85px auto auto;
+    grid-template-areas: 
+        "sidebar header"
+        "sidebar main"
+        "sidebar footer"; /* Sidebar spans all three heights */
     min-height: 100vh;
+    min-width: 100%;
     font-family: sans-serif;
 }
 
-.cards {
-    margin: 20px;
-    padding: 24px;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    align-items: stretch;
-    max-width: 1200px;    
+header{
+    height: var(--header-height);
+    grid-area: header;
+    background-color: #0b101d;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
-.card {
-    background-color: rgb(245, 250, 255);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    border-radius: 12px;
-    padding: 20px;
-    min-width: 300px;
-    flex: 1 1 300px; 
+.headerInfoDiv{
+    height: 60px;
+    background-color: #313d52;
+    display: flex;
+}
+
+.pageTitle{
+    flex: 0 0 50%;
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.userProfile.div{
+    flex: 0 0 50%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 8px;
+    padding-right: 5%;
+    font-size: 1.25rem;
+    color: #d1d5db;
+}
+
+.userProfile.pic {
+    width: 40px;
+    height: 40px;
+    background-color: #d1d5db;
+    border: 3px solid #00ff00;
+    border-radius: 50%; /* This turns a square into a circle */
+    flex-shrink: 0;    /* This prevents the circle from "squishing" into an oval */
+    transition: all 0.2s ease;
+}
+
+.userProfile.pic:hover{
+    border: 3px solid #00ff0075;
+    cursor: pointer;
+    scale: 0.9;
+}
+
+aside{
+    grid-area: sidebar;
+    background-color: #1e293b;
+    color: #ffffff;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.sidebar.linksContainer{
+    height: 80%;
+    font-size: 1.25rem;
+}
+
+.sidebar.menu.label{
+    margin-bottom: 20%;
+}
+
+.sidebar.menu.navsLink > nav ul{
+    list-style-type: none;
+}
+
+.sidebar.menu.navsLink > nav ul li a{
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 0.875rem;
+    line-height: 4;
+    display: inline-block;
+    padding: 0 10px;
+    border-radius: 999px;
+    transition: color 0.2s ease, text-shadow 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.sidebar.menu.navsLink > nav ul li a:hover,
+.sidebar.menu.navsLink > nav ul li a:focus-visible{
+    color: #00f7ff;
+    background-color: rgba(0, 247, 255, 0.12);
+    text-shadow:
+        0 0 6px rgba(0, 247, 255, 0.7),
+        0 0 14px rgba(0, 247, 255, 0.8),
+        0 0 28px rgba(0, 247, 255, 0.9);
+    box-shadow:
+        0 0 8px rgba(0, 247, 255, 0.45),
+        0 0 18px rgba(0, 247, 255, 0.55),
+        inset 0 0 10px rgba(0, 247, 255, 0.35);
+    outline: none;
+}
+
+main{
+    grid-area: main;
+    background-color: #5b647c;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
+    justify-content: right;
+    padding-left: calc(10px + 1vw);
 }
 
-.card .body {
-    flex: 1;
-    margin-bottom: 10px;
+main section{
+    margin: 0 auto;
+    min-height: calc(100vh - var(--header-height));
+    width: 100%;
+    color: #ffffff;
+    font-size: 6rem;
+    padding: 2% 0 0 2%;
 }
 
-.card--emphasize {
-    flex: 2 1 300px;
+section.hero.mainContainer{
+    background-color: rgb(152, 201, 185);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-@media (max-width: 600px) {
-    .card {
-        flex-basis: 100%;
-        min-width: 0;
+.hero.textContainer{
+    display: grid;
+    grid-template-columns: 1fr 2fr 2.5fr;
+    grid-template-rows: repeat(3, 1fr);
+    margin: 0 10% 10% 10%;
+}
+
+.hero.term#welcome{
+    grid-column: 1/3;
+    grid-row: 1/2;
+    font-size: 6rem;
+}
+
+.hero.term#to{
+    grid-column: 1/2;
+    grid-row: 2/3;
+    font-size: 6rem;
+}
+
+.hero.term#codemaster{
+    grid-column: 2/4;
+    grid-row: 2/4;
+    font-size: 7.5rem;
+    /* font-family: Remeber to Bolder font; */
+}
+
+section.overveiw.mainContainer{
+    background-color: rgb(90, 137, 216);
+}
+
+.overveiw.titleText{
+}
+
+section.courses.mainContainer{
+    background-color: rgb(63, 100, 159);
+}
+
+section.progress.mainContainer{
+    background-color: rgb(47, 67, 110);
+}
+
+section.settings.mainContainer{
+    background-color: rgb(30, 49, 79);
+}
+
+footer {
+    grid-area: footer;
+    background-color: #0b101d;
+    height: clamp(80px, 15vh, 250px);
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    color: #fff;
+}
+
+footer p{
+    font-size: 1.25rem;
+    word-spacing: 1rem;
+}
+
+@media (max-width: 800px) {
+    body {
+        background-color: rgb(255, 250, 242);
+        display: grid;
+        grid-template-columns:1fr;
+        grid-template-rows:60px 30px auto auto;
+        grid-template-areas: 
+            "header"
+            "sidebar"
+            "main"
+            "footer"; 
+        min-height: 100vh;
+        min-width: 100%;
+        font-family: sans-serif;
     }
-}
 
-button{
-    border: none;
-    padding: 20px;
-    border-radius: 999px;
-    background-color: rgb(255, 255, 255);
-    align-self: center;
-    width: 180px;
-    font-size: 14px;
-    transition: 0.15s ease-in;
-}
+    header{
+        height: var(--II-header-height);
+        grid-area: header;
+        background-color: #0b101d;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
 
-button:hover{
-    scale: 1.05;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    aside{
+        height: 40px;
+        position: sticky;
+        top: 0;
+        z-index: ;
+    }
+
+
+    .sidebar.linksContainer{
+        height: 100%;
+        font-size: 1.25rem;
+        padding: 0;
+    }
+
+    .sidebar.menu.navsLink > nav{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .sidebar.menu.label{
+        display: none;
+    }
+
+    .sidebar.menu.navsLink > nav ul{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .sidebar.menu.navsLink > nav ul li{
+        margin: 0 40px;
+    }
+
+    .sidebar.menu.navsLink > nav ul li a{
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 0.875rem;
+    line-height: 0;
+    }
 }
